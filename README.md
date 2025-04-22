@@ -18,6 +18,7 @@
 - react-hook-form
 - @hookform/resolvers
 - zod
+- Sonner / Toaster
 
 ## Figma Design
 

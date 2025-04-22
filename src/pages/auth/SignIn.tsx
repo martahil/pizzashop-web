@@ -4,6 +4,8 @@ import { Label } from '@/components/ui/label'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { toast } from 'sonner'
+import { error } from 'console'
 
 const signInForm = z.object({
   email: z.string().email(),
@@ -15,9 +17,18 @@ export function SignIn() {
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignInForm>()
 
   async function handleSignIn(data: SignInForm) {
-    console.log(data)
+    try {
+      await new Promise (resolve => setTimeout(resolve, 2000))
 
-    await new Promise (resolve => setTimeout(resolve, 2000))
+      toast.success('An authentication link has been sent to your email address.', {
+        action: {
+          label: 'Resend',
+          onClick: () => handleSignIn(data),
+        }
+      })
+    } catch {
+      toast.error('Invalid credentials.')
+    }
   }
 
   return (
