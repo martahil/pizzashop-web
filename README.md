@@ -20,6 +20,8 @@
 - zod
 - Sonner / Toaster
 - recharts
+- api
+- axios
 
 ## Figma Design
 
