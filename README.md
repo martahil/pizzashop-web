@@ -21,6 +21,7 @@
 - Sonner / Toaster
 - recharts
 - api
+- Docker
 - axios
 
 ## Figma Design
