@@ -19,6 +19,7 @@
 - @hookform/resolvers
 - zod
 - Sonner / Toaster
+- recharts
 
 ## Figma Design
 
