@@ -1,92 +1,130 @@
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { getOrderdetails } from '@/api/get-order-details'
+import { OrderStatus } from '@/components/order-status'
+import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { useQuery } from '@tanstack/react-query'
+import { formatDistanceToNow } from 'date-fns'
+import { enUS } from 'date-fns/locale'
 
-export function OrderDetails() {
+export interface OrderDetailsProps {
+  orderId: string
+  open: boolean
+}
+
+export function OrderDetails({ orderId, open }: OrderDetailsProps) {
+  const { data: order } = useQuery({
+    queryKey: ['order', orderId],
+    queryFn: () => getOrderdetails({ orderId }),
+    enabled: open,
+  })
+
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Order: d6sf46dsa4f6dsa4d6f</DialogTitle>
+        <DialogTitle>Order: {orderId}</DialogTitle>
         <DialogDescription>Order details</DialogDescription>
       </DialogHeader>
 
-      <div className="space-y-6">
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell className="text-muted-foreground">Status</TableCell>
-              <TableCell className="flex justify-end">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-slate-400" />
-                  <span className="font-medium text-muted-foreground">
-                    Pending
-                  </span>
-                </div>
-              </TableCell>
-            </TableRow>
+      {order && (
+        <div className='space-y-6'>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell className='text-muted-foreground'>Status</TableCell>
+                <TableCell className='flex justify-end'>
+                  <OrderStatus status={order.status} />
+                </TableCell>
+              </TableRow>
 
-            <TableRow>
-              <TableCell className="text-muted-foreground">Client</TableCell>
-              <TableCell className="flex justify-end">
-                Marta Hil
-              </TableCell>
-            </TableRow>
+              <TableRow>
+                <TableCell className='text-muted-foreground'>Client</TableCell>
+                <TableCell className='flex justify-end'>
+                  {order.customer.name}
+                </TableCell>
+              </TableRow>
 
-            <TableRow>
-              <TableCell className="text-muted-foreground">Phone number</TableCell>
-              <TableCell className="flex justify-end">
-                (55) 90000-0000
-              </TableCell>
-            </TableRow>
+              <TableRow>
+                <TableCell className='text-muted-foreground'>Phone number</TableCell>
+                <TableCell className='flex justify-end'>
+                  {order.customer.phone ?? 'Not provided'}
+                </TableCell>
+              </TableRow>
 
-            <TableRow>
-              <TableCell className="text-muted-foreground">E-mail</TableCell>
-              <TableCell className="flex justify-end">
-                email@email.com
-              </TableCell>
-            </TableRow>
+              <TableRow>
+                <TableCell className='text-muted-foreground'>E-mail</TableCell>
+                <TableCell className='flex justify-end'>
+                  {order.customer.email}
+                </TableCell>
+              </TableRow>
 
-            <TableRow>
-              <TableCell className="text-muted-foreground">Time ago</TableCell>
-              <TableCell className="flex justify-end">
-                3 min ago
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+              <TableRow>
+                <TableCell className='text-muted-foreground'>Time ago</TableCell>
+                <TableCell className='flex justify-end'>
+                  {formatDistanceToNow(order.createdAt, {
+                    locale: enUS,
+                    addSuffix: true,
+                  })}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
 
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Product</TableHead>
-              <TableHead className="text-right">Quantity</TableHead>
-              <TableHead className="text-right">Price</TableHead>
-              <TableHead className="text-right">Subtotal</TableHead>
-            </TableRow>
-          </TableHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Product</TableHead>
+                <TableHead className='text-right'>Quantity</TableHead>
+                <TableHead className='text-right'>Price</TableHead>
+                <TableHead className='text-right'>Subtotal</TableHead>
+              </TableRow>
+            </TableHeader>
 
-          <TableBody>
-            <TableRow>
-              <TableCell>Extra Large Pepperoni Pizza</TableCell>
-              <TableCell className="text-right">02</TableCell>
-              <TableCell className="text-right">$20</TableCell>
-              <TableCell className="text-right">$40</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Extra Large Mozzarella Pizza</TableCell>
-              <TableCell className="text-right">02</TableCell>
-              <TableCell className="text-right">$19</TableCell>
-              <TableCell className="text-right">$38</TableCell>
-            </TableRow>
-          </TableBody>
+            <TableBody>
+              {order.orderItems.map(item => {
+                return (
+                  <TableRow key={item.id}>
+                    <TableCell>{item.product.name}</TableCell>
+                    <TableCell className='text-right'>
+                      {item.quantity}
+                    </TableCell>
+                    <TableCell className='text-right'>
+                      {(item.priceInCents / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                      })}
+                    </TableCell>
+                    <TableCell className='text-right'>
+                      {(item.priceInCents * item.quantity / 100).toLocaleString(
+                        'en-US',
+                        {
+                          style: 'currency',
+                          currency: 'USD',
+                        }
+                      )}
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
 
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Order Total</TableCell>
-              <TableCell className="text-right font-medium">$78</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={3}>Order Total</TableCell>
+                <TableCell className='text-right font-medium'>
+                  {(order.totalInCents / 100).toLocaleString(
+                    'en-US',
+                    {
+                      style: 'currency',
+                      currency: 'USD',
+                    }
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
+      )}
+
     </DialogContent>
   )
 }
