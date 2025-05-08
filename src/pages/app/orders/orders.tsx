@@ -21,12 +21,12 @@ export function Orders() {
     .parse(searchParams.get('page') ?? '1')
 
   const { data: result } = useQuery({
-    queryKey: ['/orders', pageIndex, orderId, customerName, status],
+    queryKey: ['/orders', pageIndex, customerName, orderId, status],
     queryFn: () =>
       getOrders({
         pageIndex,
-        orderId,
         customerName,
+        orderId,        
         status: status === 'all' ? null : status,
       }),
   })

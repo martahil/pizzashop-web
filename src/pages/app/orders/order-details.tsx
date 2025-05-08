@@ -1,4 +1,4 @@
-import { getOrderdetails } from '@/api/get-order-details'
+import { getOrderDetails } from '@/api/get-order-details'
 import { OrderStatus } from '@/components/order-status'
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -14,7 +14,7 @@ export interface OrderDetailsProps {
 export function OrderDetails({ orderId, open }: OrderDetailsProps) {
   const { data: order } = useQuery({
     queryKey: ['order', orderId],
-    queryFn: () => getOrderdetails({ orderId }),
+    queryFn: () => getOrderDetails({ orderId }),
     enabled: open,
   })
 
