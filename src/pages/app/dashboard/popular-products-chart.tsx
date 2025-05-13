@@ -1,17 +1,9 @@
-import { getPopularProducts } from "@/api/get-popular-products";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
-import { BarChart } from "lucide-react";
+import { getPopularProducts } from '@/api/get-popular-products'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useQuery } from '@tanstack/react-query'
+import { BarChart } from 'lucide-react'
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import colors from 'tailwindcss/colors'
-
-const data = [
-  { product: 'Pepperoni', amount: 40 },
-  { product: 'Mozzarella', amount: 30 },
-  { product: 'Margherita', amount: 50 },
-  { product: 'Four cheese', amount: 16 },
-  { product: 'Fried chicken', amount: 26 },
-]
 
 const COLORS = [
   colors.sky[500],
@@ -28,13 +20,13 @@ export function PopularProductsChart() {
   })
 
   return (
-    <Card className="col-span-3">
-      <CardHeader className="pb-8">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-medium">
+    <Card className='col-span-3'>
+      <CardHeader className='pb-8'>
+        <div className='flex items-center justify-between'>
+          <CardTitle className='text-base font-medium'>
             Popular products
           </CardTitle>
-          <BarChart className="w-4 h-4 text-muted-foreground" />
+          <BarChart className='w-4 h-4 text-muted-foreground' />
         </div>
       </CardHeader>
       <CardContent>
@@ -43,8 +35,8 @@ export function PopularProductsChart() {
             <PieChart style={{ fontSize: 12 }}>
               <Pie
                 data={popularProducts}
-                dataKey='amount'
                 nameKey='product'
+                dataKey='amount'
                 cx='50%'
                 cy='50%'
                 outerRadius={86}
@@ -69,9 +61,9 @@ export function PopularProductsChart() {
                     <text
                       x={x}
                       y={y}
-                      className="fill-muted-foreground text-xs"
+                      className='fill-muted-foreground text-xs'
                       textAnchor={x > cx ? 'start' : 'end'}
-                      dominantBaseline="central"
+                      dominantBaseline='central'
                     >
                       {popularProducts[index].product.length > 12
                         ? popularProducts[index].product.substring(0, 12).concat('...')
@@ -86,7 +78,7 @@ export function PopularProductsChart() {
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index]}
-                      className="stroke-card hover:opacity-80"
+                      className='stroke-card hover:opacity-80'
                     />
                   )
                 })}
