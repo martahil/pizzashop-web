@@ -26,6 +26,7 @@
 - Vitest
 - Testing Library
 - happy-dom
+- Mock Service Worker (MSW)
 
 ## Figma Design
 
