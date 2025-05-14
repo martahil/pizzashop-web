@@ -23,6 +23,9 @@
 - api
 - Docker
 - axios
+- Vitest
+- Testing Library
+- happy-dom
 
 ## Figma Design
 
