@@ -27,6 +27,7 @@
 - Testing Library
 - happy-dom
 - Mock Service Worker (MSW)
+- PlayWright
 
 ## Figma Design
 
