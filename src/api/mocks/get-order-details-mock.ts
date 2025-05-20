@@ -18,13 +18,13 @@ export const getOrderDetailsMock = http.get<GetOrderDetailsParams, never, GetOrd
         {
           id: 'order-item-1',
           priceInCents: 1000,
-          product: {name: 'Pepperoni pizza'},
+          product: { name: 'Pepperoni pizza' },
           quantity: 1,
         },
         {
           id: 'order-item-2',
           priceInCents: 2000,
-          product: {name: 'Margherita pizza'},
+          product: { name: 'Margherita pizza' },
           quantity: 2,
         },
       ]

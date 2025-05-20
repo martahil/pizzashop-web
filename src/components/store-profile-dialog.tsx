@@ -1,15 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Button } from "./ui/button"
-import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { Textarea } from "./ui/textarea"
-import { getManagedRestaurant, GetManagedRestaurantResponse } from "@/api/get-managed-restaurant"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Button } from './ui/button'
+import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
+import { Input } from './ui/input'
+import { Label } from './ui/label'
+import { Textarea } from './ui/textarea'
+import { getManagedRestaurant, GetManagedRestaurantResponse } from '@/api/get-managed-restaurant'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { updateProfile } from "@/api/update-profile"
-import { toast } from "sonner"
+import { updateProfile } from '@/api/update-profile'
+import { toast } from 'sonner'
 
 const storeProfileSchema = z.object({
   name: z.string().min(1),
@@ -61,12 +61,12 @@ export function StoreProfileDialog() {
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
     onMutate({ name, description }) {
-      const { cached } = updateManagedRestaurantCache({name, description})
+      const { cached } = updateManagedRestaurantCache({ name, description })
 
       return { previousProfile: cached }
     },
     onError(_, __, context) {
-      if(context?.previousProfile) {
+      if (context?.previousProfile) {
         updateManagedRestaurantCache(context.previousProfile)
       }
     },
@@ -95,15 +95,15 @@ export function StoreProfileDialog() {
       </DialogHeader>
 
       <form onSubmit={handleSubmit(handleUpdateProfile)}>
-        <div className="space-y-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right" htmlFor="name">Name</Label>
-            <Input className="col-span-3" id='name' {...register('name')} />
+        <div className='space-y-4 py-4'>
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Label className='text-right' htmlFor='name'>Name</Label>
+            <Input className='col-span-3' id='name' {...register('name')} />
           </div>
 
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right" htmlFor="description">Description</Label>
-            <Textarea className="col-span-3" id='description' {...register('description')} />
+          <div className='grid grid-cols-4 items-center gap-4'>
+            <Label className='text-right' htmlFor='description'>Description</Label>
+            <Textarea className='col-span-3' id='description' {...register('description')} />
           </div>
         </div>
 
@@ -113,7 +113,7 @@ export function StoreProfileDialog() {
               Cancel
             </Button>
           </DialogClose>
-          <Button type="submit" variant='success' disabled={isSubmitting}>
+          <Button type='submit' variant='success' disabled={isSubmitting}>
             Save
           </Button>
         </DialogFooter>

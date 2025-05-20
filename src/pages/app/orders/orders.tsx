@@ -27,7 +27,7 @@ export function Orders() {
       getOrders({
         pageIndex,
         customerName,
-        orderId,        
+        orderId,
         status: status === 'all' ? null : status,
       }),
   })

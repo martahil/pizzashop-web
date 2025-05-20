@@ -3,7 +3,7 @@ import { api } from '@/lib/axios'
 export interface GetOrdersQuery {
   pageIndex?: number | null
   customerName?: string | null
-  orderId?: string | null  
+  orderId?: string | null
   status?: string | null
 }
 
@@ -27,7 +27,7 @@ export async function getOrders({ pageIndex, customerName, orderId, status }: Ge
     params: {
       pageIndex,
       customerName,
-      orderId,      
+      orderId,
       status,
     }
   })

@@ -7,4 +7,4 @@ const envSchema = z.object({
   VITE_ENABLE_API_DELAY: z.string().transform(value => value === 'true'),
 })
 
-export  const env = envSchema.parse(import.meta.env)
+export const env = envSchema.parse(import.meta.env)
