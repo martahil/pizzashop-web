@@ -14,9 +14,7 @@ test('sign up successfully', async ({ page }) => {
     'Restaurant successfully registered!'
   )
 
-  expect(toast).toBeVisible()
-
-  //await page.waitForTimeout(2000)
+  await expect(toast).toBeVisible()
 })
 
 test('sign up with error', async ({ page }) => {
@@ -33,9 +31,7 @@ test('sign up with error', async ({ page }) => {
     'Error registering restaurant.'
   )
 
-  expect(toast).toBeVisible()
-
-  //await page.waitForTimeout(2000)
+  await expect(toast).toBeVisible()
 })
 
 test('navigate to new login page', async ({ page }) => {
