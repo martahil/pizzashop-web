@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { DollarSign } from 'lucide-react'
 import { MetricCardSkeleton } from './metric-card-skeleton'
 
-export function MonthRevenuCard() {
+export function MonthRevenueCard() {
   const { data: monthRevenue } = useQuery({
     queryFn: getMonthRevenue,
     queryKey: [

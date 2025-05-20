@@ -90,7 +90,7 @@ export function SignUp() {
             <Button disabled={isSubmitting} className='w-full' type='submit'>Finish sign-up</Button>
 
             <p className='px-6 text-center text-sm leading-relaxed text-muted-foreground'>
-              By continuing, you agree to our <a className='underline underline-offset-4' href=''>Terms of Service</a> and {' '} <a className='underline underline-offset-4' href=''>Privacy Policy</a>.
+              By continuing, you agree to our{' '}<a className='underline underline-offset-4' href=''>Terms of Service</a>{' '}and{' '}<a className='underline underline-offset-4' href=''>Privacy Policy</a>.
             </p>
           </form>
         </div>
